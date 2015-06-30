@@ -1,1 +1,8 @@
 c:\users\arkadiy\documents\visual studio 2013\Projects\XTRMTestProject\XTRMTestConsoleProject\bin\Debug\XTRMTestConsoleProject.exe.config
+c:\users\arkadiy\documents\visual studio 2013\Projects\XTRMTestProject\XTRMTestConsoleProject\bin\Debug\XTRMTestConsoleProject.exe
+c:\users\arkadiy\documents\visual studio 2013\Projects\XTRMTestProject\XTRMTestConsoleProject\bin\Debug\XTRMTestConsoleProject.pdb
+c:\users\arkadiy\documents\visual studio 2013\Projects\XTRMTestProject\XTRMTestConsoleProject\bin\Debug\XTRMTestProject.dll
+c:\users\arkadiy\documents\visual studio 2013\Projects\XTRMTestProject\XTRMTestConsoleProject\bin\Debug\XTRMTestProject.pdb
+c:\users\arkadiy\documents\visual studio 2013\Projects\XTRMTestProject\XTRMTestConsoleProject\obj\Debug\XTRMTestConsoleProject.csprojResolveAssemblyReference.cache
+c:\users\arkadiy\documents\visual studio 2013\Projects\XTRMTestProject\XTRMTestConsoleProject\obj\Debug\XTRMTestConsoleProject.exe
+c:\users\arkadiy\documents\visual studio 2013\Projects\XTRMTestProject\XTRMTestConsoleProject\obj\Debug\XTRMTestConsoleProject.pdb

@@ -1,0 +1,5 @@
+c:\users\arkadiy\documents\visual studio 2013\Projects\XTRMTestProject\XTRMTestProject\bin\Debug\XTRMTestProject.dll
+c:\users\arkadiy\documents\visual studio 2013\Projects\XTRMTestProject\XTRMTestProject\bin\Debug\XTRMTestProject.pdb
+c:\users\arkadiy\documents\visual studio 2013\Projects\XTRMTestProject\XTRMTestProject\obj\Debug\XTRMTestProject.csprojResolveAssemblyReference.cache
+c:\users\arkadiy\documents\visual studio 2013\Projects\XTRMTestProject\XTRMTestProject\obj\Debug\XTRMTestProject.dll
+c:\users\arkadiy\documents\visual studio 2013\Projects\XTRMTestProject\XTRMTestProject\obj\Debug\XTRMTestProject.pdb
