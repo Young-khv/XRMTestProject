@@ -12,8 +12,10 @@ namespace XTRMTestConsoleProject
     {
         [VersionControl("Developer_1", "01.07.2015", "Create simple method")]
         public void SomeStuf()
-        { 
-            // TODO: 
+        {
+            int a = 2;
+            int b = 3;
+            int c = a + b;
         }
     }
 }
