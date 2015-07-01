@@ -26,8 +26,6 @@ namespace XTRMTestConsoleProject
             foreach(var classType in typeList)
             {
                var methodList = FindMethodsWithAttribute(classType,typeof(VersionControlAttribute));
-
-                var frames = new System.Diagnostics.StackTrace(true).GetFrames();
             }
 
             Console.ReadLine();
