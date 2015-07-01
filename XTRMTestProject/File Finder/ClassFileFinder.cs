@@ -20,8 +20,8 @@ namespace XTRMTestProject
 
         public static ClassFileDetails FindClassFile(string className)
         {
-            ClassFileDetails details = DatabaseLink.GetClassFileDetails(className);
-            if (details == null)
+            ClassFileDetails details = new ClassFileDetails();//DatabaseLink.GetClassFileDetails(className);
+            if (true)
             {
                 //Lookup class name in file names
                 classFiles = new List<string>();
@@ -34,23 +34,23 @@ namespace XTRMTestProject
                     }
                 }
                 //Lookup class name in the class file text 
-                if (details == null)
-                {
-                    for (int i = 0; i < classFiles.Count; i++)
-                    {
-                        string codeFile = File.ReadAllText(classFiles[i]);
-                        if (codeFile.Contains("class " + className))
-                        {
-                            details = new ClassFileDetails(className, classFiles[i], File.GetLastAccessTimeUtc(classFiles[i]));
-                        }
-                    }
-                }
+                //if (details == null)
+                //{
+                //    for (int i = 0; i < classFiles.Count; i++)
+                //    {
+                //        string codeFile = File.ReadAllText(classFiles[i]);
+                //        if (codeFile.Contains("class " + className))
+                //        {
+                //            details = new ClassFileDetails(className, classFiles[i], File.GetLastAccessTimeUtc(classFiles[i]));
+                //        }
+                //    }
+                //}
                 return details;
             }
-            else
-            {
-                return details;
-            }
+            //else
+            //{
+            //    return details;
+            //}
         }
 
         static void FindAllScriptFiles(string startDir)

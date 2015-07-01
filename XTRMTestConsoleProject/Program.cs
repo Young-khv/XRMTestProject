@@ -22,16 +22,18 @@ namespace XTRMTestConsoleProject
             }
             
             Assembly assembley = Assembly.GetExecutingAssembly();
-            List<Type> typeList = GetTypesWithHelpAttribute(assembley, typeof(VersionControlAttribute));
+            List<Type> typeList = GetTypesWithAttribute(assembley, typeof(VersionControlAttribute));
             foreach(var classType in typeList)
             {
                var methodList = FindMethodsWithAttribute(classType,typeof(VersionControlAttribute));
+
+                var frames = new System.Diagnostics.StackTrace(true).GetFrames();
             }
 
             Console.ReadLine();
         }
 
-        static List<Type> GetTypesWithHelpAttribute(Assembly assembly, Type attrType)
+        static List<Type> GetTypesWithAttribute(Assembly assembly, Type attrType)
         {
             List<Type> result = new List<Type>();
             foreach (Type type in assembly.GetTypes())

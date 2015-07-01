@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +10,7 @@ namespace XTRMTestProject
         public int OID { get; set; }
         public string className { get; set; }
 
-        [Sqo.Attributes.UniqueConstraint]
+        //[Sqo.Attributes.UniqueConstraint]
         public string path { get; set; }
 
         public System.DateTime updateTime { get; set; }
@@ -26,7 +25,7 @@ namespace XTRMTestProject
             path = setPath;
             updateTime = setUpdateTime;
 
-            DatabaseLink.StoreClassFileDetails(this);
+            //DatabaseLink.StoreClassFileDetails(this);
         }
     }
 }
