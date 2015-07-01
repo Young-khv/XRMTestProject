@@ -10,6 +10,10 @@ namespace XTRMTestConsoleProject
     [VersionControl("Developer_1","30.06.2015","Create simple class")]
     class MyClass
     {
-        // TODO: 
+        [VersionControl("Developer_1", "01.07.2015", "Create simple method")]
+        public void SomeStuf()
+        { 
+            // TODO: 
+        }
     }
 }

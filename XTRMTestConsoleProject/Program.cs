@@ -21,34 +21,42 @@ namespace XTRMTestConsoleProject
                 Console.WriteLine("Login:{0} | date:{1} | comment:{2}", attr.userLogin, attr.commitDateTime.ToString("dd.MM.yyyy"), attr.comment);
             }
             
+            Assembly assembley = Assembly.GetExecutingAssembly();
+            List<Type> typeList = GetTypesWithHelpAttribute(assembley, typeof(VersionControlAttribute));
+            foreach(var classType in typeList)
+            {
+               var methodList = FindMethodsWithAttribute(classType,typeof(VersionControlAttribute));             
+            }
 
             Console.ReadLine();
         }
 
-        static IEnumerable<Type> GetTypesWithHelpAttribute(Assembly assembly)
+        static List<Type> GetTypesWithHelpAttribute(Assembly assembly, Type attrType)
         {
+            List<Type> result = new List<Type>();
             foreach (Type type in assembly.GetTypes())
             {
-                if (type.GetCustomAttributes(typeof(VersionControlAttribute), true).Length > 0)
+                if (type.GetCustomAttributes(attrType, true).Length > 0)
                 {
-                    yield return type;
+                    result.Add(type);                   
                 }
             }
+            return result;
         }
 
-        static IEnumerable<MethodInfo> FindMethodsWithAttribute(Type type)
+        // Finde all methods of class with type classType and attribute attrType
+        static List<MethodInfo> FindMethodsWithAttribute(Type classType, Type attrType)
         {
-            var methods = type.GetMethods(BindingFlags.Public);
-
+            var methods = classType.GetMethods();
+            List<MethodInfo> result = new List<MethodInfo>();
             foreach(var method in methods)
             {
-                var attributes = method.GetCustomAttributes( typeof(VersionControlAttribute), true );
+                var attributes = method.GetCustomAttributes( attrType, true );
                 if (attributes != null && attributes.Length > 0)
-                    return (IEnumerable<MethodInfo>) attributes;
-
+                    result.Add(method);
             }
 
-            return null;
+            return result;
         }
     }
 }
