@@ -3,3 +3,8 @@ c:\users\arkadiy\documents\visual studio 2013\Projects\XTRMTestProject\XTRMTestP
 c:\users\arkadiy\documents\visual studio 2013\Projects\XTRMTestProject\XTRMTestProject\obj\Debug\XTRMTestProject.csprojResolveAssemblyReference.cache
 c:\users\arkadiy\documents\visual studio 2013\Projects\XTRMTestProject\XTRMTestProject\obj\Debug\XTRMTestProject.dll
 c:\users\arkadiy\documents\visual studio 2013\Projects\XTRMTestProject\XTRMTestProject\obj\Debug\XTRMTestProject.pdb
+C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestProject\bin\Debug\XTRMTestProject.dll.config
+C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestProject\bin\Debug\EntityFramework.dll
+C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestProject\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestProject\bin\Debug\EntityFramework.xml
+C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestProject\bin\Debug\EntityFramework.SqlServer.xml

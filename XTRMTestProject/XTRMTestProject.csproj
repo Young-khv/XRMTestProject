@@ -46,9 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\VersionControllDBContext.cs" />
     <Compile Include="File Finder\ClassFileDetails.cs" />
     <Compile Include="File Finder\ClassFileFinder.cs" />
-    <Compile Include="Model\Class.cs" />
+    <Compile Include="Model\ControlledClass.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\Version.cs" />
     <Compile Include="Version Control\VersionControlAttribute.cs" />

@@ -6,3 +6,5 @@ c:\users\arkadiy\documents\visual studio 2013\Projects\XTRMTestProject\XTRMTestC
 c:\users\arkadiy\documents\visual studio 2013\Projects\XTRMTestProject\XTRMTestConsoleProject\obj\Debug\XTRMTestConsoleProject.csprojResolveAssemblyReference.cache
 c:\users\arkadiy\documents\visual studio 2013\Projects\XTRMTestProject\XTRMTestConsoleProject\obj\Debug\XTRMTestConsoleProject.exe
 c:\users\arkadiy\documents\visual studio 2013\Projects\XTRMTestProject\XTRMTestConsoleProject\obj\Debug\XTRMTestConsoleProject.pdb
+C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestConsoleProject\bin\Debug\EntityFramework.dll
+C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestConsoleProject\bin\Debug\EntityFramework.xml
