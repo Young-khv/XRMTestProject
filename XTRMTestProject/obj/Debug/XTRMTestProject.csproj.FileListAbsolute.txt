@@ -3,3 +3,7 @@ c:\users\arkadiy\documents\visual studio 2013\Projects\XTRMTestProject\XTRMTestP
 c:\users\arkadiy\documents\visual studio 2013\Projects\XTRMTestProject\XTRMTestProject\obj\Debug\XTRMTestProject.csprojResolveAssemblyReference.cache
 c:\users\arkadiy\documents\visual studio 2013\Projects\XTRMTestProject\XTRMTestProject\obj\Debug\XTRMTestProject.dll
 c:\users\arkadiy\documents\visual studio 2013\Projects\XTRMTestProject\XTRMTestProject\obj\Debug\XTRMTestProject.pdb
+C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestProject\bin\Debug\Mono.Cecil.dll
+C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestProject\bin\Debug\Mono.Cecil.Mdb.dll
+C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestProject\bin\Debug\Mono.Cecil.Pdb.dll
+C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestProject\bin\Debug\Mono.Cecil.Rocks.dll

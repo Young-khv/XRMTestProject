@@ -26,7 +26,6 @@ namespace XTRMTestConsoleProject
             foreach(var classType in typeList)
             {
                var methodList = FindMethodsWithAttribute(classType,typeof(VersionControlAttribute));
-               var ara = methodList[0].GetMethodBody().GetILAsByteArray();
             }
 
             Console.ReadLine();
