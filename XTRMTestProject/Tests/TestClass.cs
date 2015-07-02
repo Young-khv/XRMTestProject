@@ -12,29 +12,32 @@ using XTRMTestProject.Model;
 
 namespace XTRMTestProject.Tests
 {
-   [TestFixture]
-   public class TestClass
-   {
-       [Test]
-       public static void MONOTest()
-       {
-           // Assembly assembly = Assembly.GetExecutingAssembly();
-           
-            
+    [TestFixture]
+    public class TestClass
+    {
+        [Test]
+        public static void MONOTest()
+        {
+            string wanted_path = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
 
-           string startPath = @"C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\";
+            wanted_path = Directory.GetParent(wanted_path).ToString();
 
-           string wanted_path = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+            string[] oDirectories = Directory.GetFiles(wanted_path, "TestClass.cs", SearchOption.AllDirectories);
 
-           wanted_path = Directory.GetParent(wanted_path).ToString();
+            var syntaxTree = SyntaxTree.ParseFile(oDirectories[0]);
 
-           string[] oDirectories = Directory.GetFiles(wanted_path, "MyAppClass.cs", SearchOption.AllDirectories);
+            var root = syntaxTree.GetRoot();
 
-           var syntaxTree = SyntaxTree.ParseFile(oDirectories[0]);
+            var method = root.GetText();
 
-           var root = syntaxTree.GetRoot();
+            string methodLines = string.Empty;
 
-           var method = root.GetText();
-       }
-   }
+            foreach (var line in method.Lines)
+            {
+                methodLines += string.Format("{0}[~]",line.ToString());
+            }
+
+            methodLines.Remove(methodLines.Length - 4, 3);
+        }
+    }
 }

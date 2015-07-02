@@ -12,11 +12,13 @@ namespace XTRMTestProject
         public string userLogin;
         public DateTime commitDateTime;
         public string comment;
+        public string csFileRealName;
 
-        public VersionControlAttribute(string userLogin, string dateTime, string comment)
+        public VersionControlAttribute(string userLogin, string dateTime, string comment, string csFileRealName)
         {
             this.userLogin = userLogin;
             this.comment = comment;
+            this.csFileRealName = csFileRealName;
             try
             {
                 this.commitDateTime = Convert.ToDateTime(dateTime);

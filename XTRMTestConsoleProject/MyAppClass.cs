@@ -7,10 +7,10 @@ using XTRMTestProject;
 
 namespace XTRMTestConsoleProject
 {
-    [VersionControl("Developer_1","30.06.2015","Create simple class")]
+    [VersionControl("Developer_1", "30.06.2015", "Create simple class", "MyAppClass.cs")]
     class MyClass
     {
-        [VersionControl("Developer_1", "01.07.2015", "Create simple method")]
+        [VersionControl("Developer_1", "01.07.2015", "Create simple method", "MyAppClass.cs")]
         public void SomeStuf()
         {
             int a = 2;
