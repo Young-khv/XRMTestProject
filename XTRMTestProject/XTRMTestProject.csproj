@@ -36,6 +36,21 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Jails">
+      <HintPath>..\packages\Jails.0.3.0\lib\net45\Jails.dll</HintPath>
+    </Reference>
+    <Reference Include="Jails.Extensions.Roslyn">
+      <HintPath>..\packages\Jails.Extensions.Roslyn.0.3.0\lib\net45\Jails.Extensions.Roslyn.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Roslyn.Compilers">
+      <HintPath>..\packages\Roslyn.Compilers.Common.1.2.20906.2\lib\net45\Roslyn.Compilers.dll</HintPath>
+    </Reference>
+    <Reference Include="Roslyn.Compilers.CSharp">
+      <HintPath>..\packages\Roslyn.Compilers.CSharp.1.2.20906.2\lib\net45\Roslyn.Compilers.CSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -52,6 +67,7 @@
     <Compile Include="Model\ControlledClass.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\Version.cs" />
+    <Compile Include="Tests\TestClass.cs" />
     <Compile Include="Version Control\VersionControlAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Version Control\VersionController.cs" />

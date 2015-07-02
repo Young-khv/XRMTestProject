@@ -8,3 +8,11 @@ C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestP
 C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestProject\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestProject\bin\Debug\EntityFramework.xml
 C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestProject\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestProject\bin\Debug\nunit.framework.dll
+C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestProject\bin\Debug\nunit.framework.xml
+C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestProject\bin\Debug\Jails.dll
+C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestProject\bin\Debug\Jails.Extensions.Roslyn.dll
+C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestProject\bin\Debug\Roslyn.Compilers.CSharp.dll
+C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestProject\bin\Debug\Roslyn.Compilers.dll
+C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestProject\bin\Debug\Roslyn.Compilers.xml
+C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestProject\bin\Debug\Roslyn.Compilers.CSharp.xml
