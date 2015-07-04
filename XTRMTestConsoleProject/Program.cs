@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using XTRMTestProject;
+using XTRMTestProject.Version_Control;
 
 namespace XTRMTestConsoleProject
 {
@@ -14,51 +15,18 @@ namespace XTRMTestConsoleProject
     {
         static void Main(string[] args)
         {
-            Type t = typeof (MyClass);
-            var attrs = t.GetCustomAttributes(false);
-            VersionControlAttribute attr = null;
-            foreach (var item in attrs)
-            {
-                attr = item as VersionControlAttribute;
-                Console.WriteLine("Login:{0} | date:{1} | comment:{2}", attr.userLogin, attr.commitDateTime.ToString("dd.MM.yyyy"), attr.comment);
-            }
+           // DO SOME STUFF IN MY APP
             
-            Assembly assembley = Assembly.GetExecutingAssembly();
-            List<Type> typeList = GetTypesWithAttribute(assembley, typeof(VersionControlAttribute));
-            foreach(var classType in typeList)
-            {
-               var methodList = FindMethodsWithAttribute(classType,typeof(VersionControlAttribute));
-            }
-            
+
+            VersionController vc = new VersionController(Assembly.GetExecutingAssembly());
+
+            bool appHasChanges = vc.SearchAndAddNewVersions();
+
+            string message = (appHasChanges) ? "We add all changes of your project to our DB" : "404: Changes no found";
+
+            Console.WriteLine(message);
+
             Console.ReadLine();
-        }
-
-        static List<Type> GetTypesWithAttribute(Assembly assembly, Type attrType)
-        {
-            List<Type> result = new List<Type>();
-            foreach (Type type in assembly.GetTypes())
-            {
-                if (type.GetCustomAttributes(attrType, true).Length > 0)
-                {
-                    result.Add(type);                   
-                }
-            }
-            return result;
-        }
-
-        // Finde all methods of class with type classType and attribute attrType
-        static List<MethodInfo> FindMethodsWithAttribute(Type classType, Type attrType)
-        {
-            var methods = classType.GetMethods();
-            List<MethodInfo> result = new List<MethodInfo>();
-            foreach(var method in methods)
-            {
-                var attributes = method.GetCustomAttributes( attrType, true );
-                if (attributes != null && attributes.Length > 0)
-                    result.Add(method);
-            }
-
-            return result;
         }
     }
 }

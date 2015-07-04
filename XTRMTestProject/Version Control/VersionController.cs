@@ -30,22 +30,44 @@ namespace XTRMTestProject.Version_Control
             // Get all class types with custom attribute
             List<Type> typesWithAttyList = GetTypesWithAttribute();
 
-            DateTime versionDate = new DateTime(1900,1,1);
+            DateTime newVersionDate = new DateTime(1900,1,1);
 
             // Get lastest version of class (check class and methods max date in attr)
             foreach (var classWithAttr in typesWithAttyList)
             {
-                versionDate = GetClassMaxVersionDateTime(classWithAttr);
+                newVersionDate = GetClassMaxVersionDateTime(classWithAttr);
 
-                 // Compare max date of current class in project with DB max version and create new verion if we have newest (or create if class already not in DB)
-                if (db.ControlledClasses.Any(c => c.name == classWithAttr.Name))
+                try
                 {
-                    // TODO
+
+                    // Compare max date of current class in project with DB max version and create new verion if we have newest (or create if class already not in DB)
+                    if (db.ControlledClasses.Any(c => c.name == classWithAttr.Name))
+                    {
+                        var user = GetUserFromClassType(classWithAttr);
+
+                        var modifiedClass = db.ControlledClasses.First(c => c.name == classWithAttr.Name);
+
+                        var lastestVersion = modifiedClass.versions.OrderByDescending(v => v.date).First();
+
+                        if (newVersionDate > lastestVersion.date)
+                        {
+                            AddVersionToClass(user, modifiedClass, classWithAttr, lastestVersion);
+
+                            return true;
+                        }
+                    }
+
+                    else
+                    {
+                        CreateNewClassToVersionControl(classWithAttr);
+
+                        return true;
+                    }
                 }
 
-                else
+                catch
                 {
-                    CreateNewClassToVersionControl(classWithAttr);
+                    return false;
                 }
             }
 
@@ -106,20 +128,10 @@ namespace XTRMTestProject.Version_Control
             return resultDate;
         }
 
+        // Creating new class to version controll system
         private void CreateNewClassToVersionControl(Type type)
         {
-            var attributes = type.GetCustomAttributes(attributeType, true).First() as VersionControlAttribute;
-
-            User user = db.Users.First(u => u.login == attributes.userLogin);
-
-            if (user == null)
-            {
-                user = new User();
-                user.login = attributes.userLogin;
-
-                db.Users.Add(user);
-                db.SaveChanges();
-            }
+            
 
             ControlledClass newClass = new ControlledClass();
 
@@ -128,7 +140,9 @@ namespace XTRMTestProject.Version_Control
             db.ControlledClasses.Add(newClass);
             db.SaveChanges();
 
-            AddVersionToClass(user, newClass, type);
+            var user = GetUserFromClassType(type);
+
+            AddVersionToClass(user, newClass, type, null);
         }
 
         // Getting class source code by class real file name (.cs file name required)
@@ -158,7 +172,7 @@ namespace XTRMTestProject.Version_Control
             return methodLines;
         }
 
-        private void AddVersionToClass(User user, ControlledClass controlledClass, Type type)
+        private void AddVersionToClass(User user, ControlledClass controlledClass, Type type, Model.Version previousVersion)
         {
             var attributes = type.GetCustomAttributes(attributeType, true).First() as VersionControlAttribute;
 
@@ -168,11 +182,30 @@ namespace XTRMTestProject.Version_Control
                 comment = attributes.comment,
                 date = attributes.commitDateTime,
                 user = user,
-                controlledClass = controlledClass
+                controlledClass = controlledClass,
+                previousVersion = previousVersion
             };
 
             db.Versions.Add(version);
             db.SaveChanges();
+        }
+
+        private User GetUserFromClassType(Type type)
+        {
+            var attributes = type.GetCustomAttributes(attributeType, true).First() as VersionControlAttribute;
+
+            User user = db.Users.First(u => u.login == attributes.userLogin);
+
+            if (user == null)
+            {
+                user = new User();
+                user.login = attributes.userLogin;
+
+                db.Users.Add(user);
+                db.SaveChanges();
+            }
+
+            return user;
         }
     }
 }
