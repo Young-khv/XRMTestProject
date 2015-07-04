@@ -10,8 +10,10 @@ namespace XTRMTestProject.Data
 {
     public class VersionControllContext: DbContext
     {
-        public VersionControllContext(): base("VersionControllDB")
+        public VersionControllContext()
+            : base(@"Data Source=PC-HOME\MSSQLSERVER2012;Initial Catalog=VersionControll;Integrated Security=True")
         {
+            var ensureDLLIsCopied = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
         }
 
         public DbSet<ControlledClass> ControlledClasses { get; set; }

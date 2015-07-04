@@ -10,7 +10,7 @@ namespace XTRMTestConsoleProject
     [VersionControl("Developer_1", "30.06.2015", "Create simple class", "MyAppClass.cs")]
     class MyClass
     {
-        [VersionControl("Developer_1", "01.07.2015", "Create simple method", "MyAppClass.cs")]
+        [VersionControl("Developer_2", "02.07.2015", "Modifying method", "MyAppClass.cs")]
         public void SomeStuf()
         {
             int a = 2;

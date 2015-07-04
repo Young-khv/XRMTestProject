@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Data.SqlClient;
 using System.Text;
 using System.Threading.Tasks;
 using Roslyn.Compilers.CSharp;
@@ -32,18 +33,19 @@ namespace XTRMTestProject.Version_Control
 
             DateTime newVersionDate = new DateTime(1900,1,1);
 
+            string lastAuthor = string.Empty;
+
             // Get lastest version of class (check class and methods max date in attr)
             foreach (var classWithAttr in typesWithAttyList)
             {
-                newVersionDate = GetClassMaxVersionDateTime(classWithAttr);
+                newVersionDate = GetClassMaxVersionDateTime(classWithAttr, lastAuthor);
 
                 try
                 {
-
                     // Compare max date of current class in project with DB max version and create new verion if we have newest (or create if class already not in DB)
                     if (db.ControlledClasses.Any(c => c.name == classWithAttr.Name))
                     {
-                        var user = GetUserFromClassType(classWithAttr);
+                        var user = GetUserFromClassType(classWithAttr, lastAuthor);
 
                         var modifiedClass = db.ControlledClasses.First(c => c.name == classWithAttr.Name);
 
@@ -59,7 +61,7 @@ namespace XTRMTestProject.Version_Control
 
                     else
                     {
-                        CreateNewClassToVersionControl(classWithAttr);
+                        CreateNewClassToVersionControl(classWithAttr, lastAuthor);
 
                         return true;
                     }
@@ -108,31 +110,34 @@ namespace XTRMTestProject.Version_Control
         }
 
         // Find higher version date of class by type
-        private DateTime GetClassMaxVersionDateTime(Type type)
+        private DateTime GetClassMaxVersionDateTime(Type type, string lastAuthor)
         {
             // Get datetime from class attribute
-            var attrebute = type.GetCustomAttributes(attributeType, false).First() as VersionControlAttribute;
+            var attribute = type.GetCustomAttributes(attributeType, false).First() as VersionControlAttribute;
 
-            DateTime resultDate = attrebute.commitDateTime;
+            DateTime resultDate = attribute.commitDateTime;
 
             // Search highers datetime in attributes of method in class
             var methodsOfClass = FindMethodsWithAttribute(type);
 
             foreach (var method in methodsOfClass)
             {
-                attrebute = method.GetCustomAttributes(attributeType, false).First() as VersionControlAttribute;
+                attribute = method.GetCustomAttributes(attributeType, false).First() as VersionControlAttribute;
 
-                resultDate = (attrebute.commitDateTime > resultDate) ? attrebute.commitDateTime : resultDate;
+                if (attribute.commitDateTime > resultDate)
+                {
+                    resultDate = attribute.commitDateTime;
+
+                    lastAuthor = attribute.userLogin;
+                }
             }
 
             return resultDate;
         }
 
         // Creating new class to version controll system
-        private void CreateNewClassToVersionControl(Type type)
+        private void CreateNewClassToVersionControl(Type type, string lastAuthor)
         {
-            
-
             ControlledClass newClass = new ControlledClass();
 
             newClass.name = type.Name;
@@ -140,7 +145,7 @@ namespace XTRMTestProject.Version_Control
             db.ControlledClasses.Add(newClass);
             db.SaveChanges();
 
-            var user = GetUserFromClassType(type);
+            var user = GetUserFromClassType(type, lastAuthor);
 
             AddVersionToClass(user, newClass, type, null);
         }
@@ -190,19 +195,41 @@ namespace XTRMTestProject.Version_Control
             db.SaveChanges();
         }
 
-        private User GetUserFromClassType(Type type)
+        private User GetUserFromClassType(Type type, string lastAuthor)
         {
             var attributes = type.GetCustomAttributes(attributeType, true).First() as VersionControlAttribute;
 
-            User user = db.Users.First(u => u.login == attributes.userLogin);
+            User user = null;
 
-            if (user == null)
+            if (lastAuthor == string.Empty)
+            {
+                user = GetUserByNameString(attributes.userLogin);
+            }
+
+            else
+            {
+                user = GetUserByNameString(lastAuthor);
+            }
+
+            return user;
+        }
+
+        private User GetUserByNameString(string userName)
+        {
+            User user = null;
+
+            if (!db.Users.Any(u => u.login == userName))
             {
                 user = new User();
-                user.login = attributes.userLogin;
+                user.login = userName;
 
                 db.Users.Add(user);
                 db.SaveChanges();
+            }
+
+            else
+            {
+                user = db.Users.First(u => u.login == userName);
             }
 
             return user;
