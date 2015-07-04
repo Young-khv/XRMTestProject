@@ -9,10 +9,12 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using Roslyn.Compilers.CSharp;
 using XTRMTestProject.Model;
+using XTRMTestProject.Version_Control;
 
 namespace XTRMTestProject.Tests
 {
     [TestFixture]
+    [VersionControl("Developer_1", "02.07.2015", "Create simple method", "TestClass.cs")]
     public class TestClass
     {
         [Test]
@@ -38,6 +40,16 @@ namespace XTRMTestProject.Tests
             }
 
             methodLines.Remove(methodLines.Length - 4, 3);
+            
+        }
+
+        [Test]
+        [VersionControl("Developer_1", "03.07.2015", "Create simple method", "TestClass.cs")]
+        public static void VCTests()
+        {
+            VersionController vc = new VersionController(Assembly.GetExecutingAssembly());
+
+           vc.SearchAndAddNewVersions();
         }
     }
 }
