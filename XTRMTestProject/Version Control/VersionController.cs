@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Roslyn.Compilers.CSharp;
 using XTRMTestProject.Data;
+using XTRMTestProject.Model;
 
 namespace XTRMTestProject.Version_Control
 {
@@ -30,12 +33,21 @@ namespace XTRMTestProject.Version_Control
             DateTime versionDate = new DateTime(1900,1,1);
 
             // Get lastest version of class (check class and methods max date in attr)
-            foreach (var classWithAtty in typesWithAttyList)
+            foreach (var classWithAttr in typesWithAttyList)
             {
-                versionDate = GetClassMaxVersionDateTime(classWithAtty);
-            }
+                versionDate = GetClassMaxVersionDateTime(classWithAttr);
 
-            // Compare max date of current class in project with DB max version and create new verion if we have newest (or create if class already not in DB)
+                 // Compare max date of current class in project with DB max version and create new verion if we have newest (or create if class already not in DB)
+                if (db.ControlledClasses.Any(c => c.name == classWithAttr.Name))
+                {
+                    // TODO
+                }
+
+                else
+                {
+                    CreateNewClassToVersionControl(classWithAttr);
+                }
+            }
 
             return false;
         }
@@ -77,23 +89,90 @@ namespace XTRMTestProject.Version_Control
         private DateTime GetClassMaxVersionDateTime(Type type)
         {
             // Get datetime from class attribute
-            var attrebutes = type.GetCustomAttributes(attributeType,false);
+            var attrebute = type.GetCustomAttributes(attributeType, false).First() as VersionControlAttribute;
 
-            VersionControlAttribute attr = attrebutes[0] as VersionControlAttribute;
-
-            DateTime resultDate = attr.commitDateTime;
+            DateTime resultDate = attrebute.commitDateTime;
 
             // Search highers datetime in attributes of method in class
             var methodsOfClass = FindMethodsWithAttribute(type);
 
             foreach (var method in methodsOfClass)
             {
-                attr = method.GetCustomAttributes(attributeType, false)[0] as VersionControlAttribute;
+                attrebute = method.GetCustomAttributes(attributeType, false).First() as VersionControlAttribute;
 
-                resultDate = (attr.commitDateTime > resultDate) ? attr.commitDateTime : resultDate;
+                resultDate = (attrebute.commitDateTime > resultDate) ? attrebute.commitDateTime : resultDate;
             }
 
             return resultDate;
+        }
+
+        private void CreateNewClassToVersionControl(Type type)
+        {
+            var attributes = type.GetCustomAttributes(attributeType, true).First() as VersionControlAttribute;
+
+            User user = db.Users.First(u => u.login == attributes.userLogin);
+
+            if (user == null)
+            {
+                user = new User();
+                user.login = attributes.userLogin;
+
+                db.Users.Add(user);
+                db.SaveChanges();
+            }
+
+            ControlledClass newClass = new ControlledClass();
+
+            newClass.name = type.Name;
+
+            db.ControlledClasses.Add(newClass);
+            db.SaveChanges();
+
+            AddVersionToClass(user, newClass, type);
+        }
+
+        // Getting class source code by class real file name (.cs file name required)
+        private string GetClassBody(string classFileName)
+        {
+            string project_path = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
+
+            project_path = Directory.GetParent(project_path).ToString();
+
+            string[] oDirectories = Directory.GetFiles(project_path, classFileName, SearchOption.AllDirectories);
+
+            var syntaxTree = SyntaxTree.ParseFile(oDirectories[0]);
+
+            var root = syntaxTree.GetRoot();
+
+            var method = root.GetText();
+
+            string methodLines = string.Empty;
+
+            foreach (var line in method.Lines)
+            {
+                methodLines += string.Format("{0}[~]", line.ToString());
+            }
+
+            methodLines.Remove(methodLines.Length - 4, 3);
+
+            return methodLines;
+        }
+
+        private void AddVersionToClass(User user, ControlledClass controlledClass, Type type)
+        {
+            var attributes = type.GetCustomAttributes(attributeType, true).First() as VersionControlAttribute;
+
+            XTRMTestProject.Model.Version version = new XTRMTestProject.Model.Version()
+            {
+                classBody = GetClassBody(attributes.csFileRealName),
+                comment = attributes.comment,
+                date = attributes.commitDateTime,
+                user = user,
+                controlledClass = controlledClass
+            };
+
+            db.Versions.Add(version);
+            db.SaveChanges();
         }
     }
 }

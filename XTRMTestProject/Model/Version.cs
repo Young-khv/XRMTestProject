@@ -18,6 +18,8 @@ namespace XTRMTestProject.Model
 
         public virtual User user { get; set; }
 
+        public virtual Version previousVersion { get; set; }
+
         public virtual ControlledClass controlledClass { get; set; }
     }
 }
