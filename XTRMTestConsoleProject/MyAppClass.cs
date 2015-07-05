@@ -7,13 +7,13 @@ using XTRMTestProject;
 
 namespace XTRMTestConsoleProject
 {
-    [VersionControl("Developer_1", "07.07.2015", "Create MyClass", "MyAppClass.cs")]
+    [VersionControl("Developer_1", "07.07.2015", "Change MyClass", "MyAppClass.cs")]
     class MyClass
     {
-        [VersionControl("Developer_2", "06.07.2015", "Rename Sum to Sum1", "MyAppClass.cs")]
-        public int Sum1(int a, int b)
+        [VersionControl("Developer_2", "08.07.2015", "Create method to sum 2 strings", "MyAppClass.cs")]
+        public string StringSum(string a, string b)
         {
-            return a + b;
+            return String.Format("{0}+{1} = {2}", a, b, a + b);
         }
     }
 }

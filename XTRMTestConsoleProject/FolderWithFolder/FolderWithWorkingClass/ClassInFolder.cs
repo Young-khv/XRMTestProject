@@ -10,10 +10,10 @@ namespace XTRMTestConsoleProject.FolderWithFolder.FolderWithWorkingClass
     [VersionControl("Developer_1", "03.07.2015", "Add new class to project", "ClassInFolder.cs")]
     class ClassInFolder
     {
-        [VersionControl("Developer_1", "05.07.2015", "Add new Method", "ClassInFolder.cs")]
+        [VersionControl("Developer_1", "06.07.2015", "Add new Method", "ClassInFolder.cs")]
         public void Some()
         {
-            int a = 6;
+           
         }
     }
 }
