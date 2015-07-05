@@ -16,6 +16,8 @@ namespace XTRMTestProject.Model
 
         public string comment { get; set; }
 
+        public string realCLassFileName { get; set; }
+
         public virtual User user { get; set; }
 
         public virtual Version previousVersion { get; set; }

@@ -7,7 +7,7 @@ using XTRMTestProject;
 
 namespace XTRMTestConsoleProject
 {
-    [VersionControl("Developer_1", "30.06.2015", "Create simple class", "MyAppClass.cs")]
+    [VersionControl("Developer_1", "03.07.2015", "Some other changes", "MyAppClass.cs")]
     class MyClass
     {
         [VersionControl("Developer_2", "02.07.2015", "Modifying method", "MyAppClass.cs")]

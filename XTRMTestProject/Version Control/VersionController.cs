@@ -31,29 +31,25 @@ namespace XTRMTestProject.Version_Control
             // Get all class types with custom attribute
             List<Type> typesWithAttyList = GetTypesWithAttribute();
 
-            DateTime newVersionDate = new DateTime(1900,1,1);
+            Model.Version newVersion = null;
 
-            string lastAuthor = string.Empty;
-
-            // Get lastest version of class (check class and methods max date in attr)
+           // Get lastest version of class (check class and methods max date in attr)
             foreach (var classWithAttr in typesWithAttyList)
             {
-                newVersionDate = GetClassMaxVersionDateTime(classWithAttr, lastAuthor);
+                newVersion = GetLastestVersionByType(classWithAttr);
 
                 try
                 {
                     // Compare max date of current class in project with DB max version and create new verion if we have newest (or create if class already not in DB)
                     if (db.ControlledClasses.Any(c => c.name == classWithAttr.Name))
                     {
-                        var user = GetUserFromClassType(classWithAttr, lastAuthor);
-
                         var modifiedClass = db.ControlledClasses.First(c => c.name == classWithAttr.Name);
 
                         var lastestVersion = modifiedClass.versions.OrderByDescending(v => v.date).First();
 
-                        if (newVersionDate > lastestVersion.date)
+                        if (newVersion.date > lastestVersion.date)
                         {
-                            AddVersionToClass(user, modifiedClass, classWithAttr, lastestVersion);
+                            AddVersionToClass(newVersion, modifiedClass, lastestVersion);
 
                             return true;
                         }
@@ -61,7 +57,7 @@ namespace XTRMTestProject.Version_Control
 
                     else
                     {
-                        CreateNewClassToVersionControl(classWithAttr, lastAuthor);
+                        CreateNewClassToVersionControl(classWithAttr);
 
                         return true;
                     }
@@ -109,8 +105,8 @@ namespace XTRMTestProject.Version_Control
             return methodList;
         }
 
-        // Find higher version date of class by type
-        private DateTime GetClassMaxVersionDateTime(Type type, string lastAuthor)
+        // Find higher version date of class by type ------- DELETE -----
+        private DateTime GetClassMaxVersionDateTime(Type type)
         {
             // Get datetime from class attribute
             var attribute = type.GetCustomAttributes(attributeType, false).First() as VersionControlAttribute;
@@ -127,16 +123,37 @@ namespace XTRMTestProject.Version_Control
                 if (attribute.commitDateTime > resultDate)
                 {
                     resultDate = attribute.commitDateTime;
-
-                    lastAuthor = attribute.userLogin;
                 }
             }
 
             return resultDate;
         }
 
+        // Getting class lastest version info
+        private Model.Version GetLastestVersionByType(Type type)
+        {
+            var attribute = type.GetCustomAttributes(attributeType, false).First() as VersionControlAttribute;
+
+            Model.Version resultVersion = ConfigStartupVersionState(attribute);
+           
+
+            var methodsOfClass = FindMethodsWithAttribute(type);
+
+            foreach (var method in methodsOfClass)
+            {
+                attribute = method.GetCustomAttributes(attributeType, false).First() as VersionControlAttribute;
+
+                if (attribute.commitDateTime > resultVersion.date)
+                {
+                    resultVersion = ConfigStartupVersionState(attribute);
+                }
+            }
+
+            return resultVersion;
+        }
+
         // Creating new class to version controll system
-        private void CreateNewClassToVersionControl(Type type, string lastAuthor)
+        private void CreateNewClassToVersionControl(Type type)
         {
             ControlledClass newClass = new ControlledClass();
 
@@ -145,9 +162,9 @@ namespace XTRMTestProject.Version_Control
             db.ControlledClasses.Add(newClass);
             db.SaveChanges();
 
-            var user = GetUserFromClassType(type, lastAuthor);
+            var version = GetLastestVersionByType(type);
 
-            AddVersionToClass(user, newClass, type, null);
+            AddVersionToClass(version, newClass, null);
         }
 
         // Getting class source code by class real file name (.cs file name required)
@@ -177,43 +194,17 @@ namespace XTRMTestProject.Version_Control
             return methodLines;
         }
 
-        private void AddVersionToClass(User user, ControlledClass controlledClass, Type type, Model.Version previousVersion)
+        private void AddVersionToClass(Model.Version version, ControlledClass controlledClass, Model.Version previousVersion)
         {
-            var attributes = type.GetCustomAttributes(attributeType, true).First() as VersionControlAttribute;
-
-            XTRMTestProject.Model.Version version = new XTRMTestProject.Model.Version()
-            {
-                classBody = GetClassBody(attributes.csFileRealName),
-                comment = attributes.comment,
-                date = attributes.commitDateTime,
-                user = user,
-                controlledClass = controlledClass,
-                previousVersion = previousVersion
-            };
+            version.controlledClass = controlledClass;
+            version.classBody = GetClassBody(version.realCLassFileName);
+            version.previousVersion = previousVersion;
 
             db.Versions.Add(version);
             db.SaveChanges();
         }
 
-        private User GetUserFromClassType(Type type, string lastAuthor)
-        {
-            var attributes = type.GetCustomAttributes(attributeType, true).First() as VersionControlAttribute;
-
-            User user = null;
-
-            if (lastAuthor == string.Empty)
-            {
-                user = GetUserByNameString(attributes.userLogin);
-            }
-
-            else
-            {
-                user = GetUserByNameString(lastAuthor);
-            }
-
-            return user;
-        }
-
+        // Getting user by name or create and return if does not exist
         private User GetUserByNameString(string userName)
         {
             User user = null;
@@ -233,6 +224,19 @@ namespace XTRMTestProject.Version_Control
             }
 
             return user;
+        }
+
+        private Model.Version ConfigStartupVersionState(VersionControlAttribute attribute)
+        {
+            Model.Version resultVersion = new Model.Version()
+            {
+                date = attribute.commitDateTime,
+                comment = attribute.comment,
+                realCLassFileName = attribute.csFileRealName,
+                user = GetUserByNameString(attribute.userLogin)
+            };
+
+            return resultVersion;
         }
     }
 }
