@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTRMTestProject", "XTRMTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTRMTestConsoleProject", "XTRMTestConsoleProject\XTRMTestConsoleProject.csproj", "{B47D9B10-4858-4F1A-8209-8B1BEFF856A5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTRMVersionsViewer", "XTRMVersionsViewer\XTRMVersionsViewer.csproj", "{AF39EDD9-3B62-45D4-9A77-5BE29520498A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B47D9B10-4858-4F1A-8209-8B1BEFF856A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B47D9B10-4858-4F1A-8209-8B1BEFF856A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B47D9B10-4858-4F1A-8209-8B1BEFF856A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF39EDD9-3B62-45D4-9A77-5BE29520498A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF39EDD9-3B62-45D4-9A77-5BE29520498A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF39EDD9-3B62-45D4-9A77-5BE29520498A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF39EDD9-3B62-45D4-9A77-5BE29520498A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
