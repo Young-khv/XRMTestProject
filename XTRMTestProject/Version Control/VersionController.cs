@@ -105,30 +105,6 @@ namespace XTRMTestProject.Version_Control
             return methodList;
         }
 
-        // Find higher version date of class by type ------- DELETE -----
-        private DateTime GetClassMaxVersionDateTime(Type type)
-        {
-            // Get datetime from class attribute
-            var attribute = type.GetCustomAttributes(attributeType, false).First() as VersionControlAttribute;
-
-            DateTime resultDate = attribute.commitDateTime;
-
-            // Search highers datetime in attributes of method in class
-            var methodsOfClass = FindMethodsWithAttribute(type);
-
-            foreach (var method in methodsOfClass)
-            {
-                attribute = method.GetCustomAttributes(attributeType, false).First() as VersionControlAttribute;
-
-                if (attribute.commitDateTime > resultDate)
-                {
-                    resultDate = attribute.commitDateTime;
-                }
-            }
-
-            return resultDate;
-        }
-
         // Getting class lastest version info
         private Model.Version GetLastestVersionByType(Type type)
         {
@@ -194,6 +170,7 @@ namespace XTRMTestProject.Version_Control
             return methodLines;
         }
 
+        // Creating new version of controlled class
         private void AddVersionToClass(Model.Version version, ControlledClass controlledClass, Model.Version previousVersion)
         {
             version.controlledClass = controlledClass;
@@ -226,6 +203,7 @@ namespace XTRMTestProject.Version_Control
             return user;
         }
 
+        // Configuring startup state of new version and return it
         private Model.Version ConfigStartupVersionState(VersionControlAttribute attribute)
         {
             Model.Version resultVersion = new Model.Version()
