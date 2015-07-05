@@ -15,3 +15,4 @@ C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestP
 C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestProject\bin\Debug\Roslyn.Compilers.dll
 C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestProject\bin\Debug\Roslyn.Compilers.xml
 C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestProject\bin\Debug\Roslyn.Compilers.CSharp.xml
+C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestProject\obj\Debug\XTRMTestProject.csprojResolveAssemblyReference.cache

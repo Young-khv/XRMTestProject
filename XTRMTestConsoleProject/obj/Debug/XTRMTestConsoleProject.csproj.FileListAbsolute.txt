@@ -14,3 +14,5 @@ C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestC
 C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestConsoleProject\bin\Debug\Roslyn.Compilers.xml
 C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestConsoleProject\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestConsoleProject\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestConsoleProject\bin\Debug\nunit.framework.dll
+C:\Users\Arkadiy\Documents\Visual Studio 2013\Projects\XTRMTestProject\XTRMTestConsoleProject\bin\Debug\nunit.framework.xml
