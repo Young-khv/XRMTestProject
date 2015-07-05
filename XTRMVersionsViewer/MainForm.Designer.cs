@@ -35,6 +35,8 @@
             this.classesListBox = new System.Windows.Forms.ListBox();
             this.usersListBox = new System.Windows.Forms.ListBox();
             this.sourceCodeRTB = new System.Windows.Forms.RichTextBox();
+            this.versionsList = new System.Windows.Forms.ListBox();
+            this.commentRTB = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -54,6 +56,8 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.commentRTB);
+            this.splitContainer1.Panel1.Controls.Add(this.versionsList);
             this.splitContainer1.Panel1.Controls.Add(this.versionsTab);
             // 
             // splitContainer1.Panel2
@@ -104,6 +108,7 @@
             this.classesListBox.Name = "classesListBox";
             this.classesListBox.Size = new System.Drawing.Size(396, 205);
             this.classesListBox.TabIndex = 0;
+            this.classesListBox.SelectedIndexChanged += new System.EventHandler(this.classesListBox_SelectedIndexChanged);
             // 
             // usersListBox
             // 
@@ -113,6 +118,7 @@
             this.usersListBox.Name = "usersListBox";
             this.usersListBox.Size = new System.Drawing.Size(396, 205);
             this.usersListBox.TabIndex = 0;
+            this.usersListBox.SelectedIndexChanged += new System.EventHandler(this.usersListBox_SelectedIndexChanged);
             // 
             // sourceCodeRTB
             // 
@@ -123,6 +129,26 @@
             this.sourceCodeRTB.Size = new System.Drawing.Size(868, 416);
             this.sourceCodeRTB.TabIndex = 0;
             this.sourceCodeRTB.Text = "";
+            // 
+            // versionsList
+            // 
+            this.versionsList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.versionsList.FormattingEnabled = true;
+            this.versionsList.Location = new System.Drawing.Point(410, 0);
+            this.versionsList.Name = "versionsList";
+            this.versionsList.Size = new System.Drawing.Size(458, 237);
+            this.versionsList.TabIndex = 1;
+            this.versionsList.SelectedIndexChanged += new System.EventHandler(this.versionsList_SelectedIndexChanged);
+            // 
+            // commentRTB
+            // 
+            this.commentRTB.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.commentRTB.Location = new System.Drawing.Point(410, 141);
+            this.commentRTB.Name = "commentRTB";
+            this.commentRTB.ReadOnly = true;
+            this.commentRTB.Size = new System.Drawing.Size(458, 96);
+            this.commentRTB.TabIndex = 2;
+            this.commentRTB.Text = "";
             // 
             // MainForm
             // 
@@ -135,6 +161,7 @@
             this.MinimizeBox = false;
             this.Name = "MainForm";
             this.Text = "Просмотр истории версий";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -155,6 +182,8 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ListBox usersListBox;
         private System.Windows.Forms.RichTextBox sourceCodeRTB;
+        private System.Windows.Forms.RichTextBox commentRTB;
+        private System.Windows.Forms.ListBox versionsList;
 
     }
 }
