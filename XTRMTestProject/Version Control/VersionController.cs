@@ -33,6 +33,8 @@ namespace XTRMTestProject.Version_Control
 
             Model.Version newVersion = null;
 
+            bool result = false;
+
            // Get lastest version of class (check class and methods max date in attr)
             foreach (var classWithAttr in typesWithAttyList)
             {
@@ -51,7 +53,7 @@ namespace XTRMTestProject.Version_Control
                         {
                             AddVersionToClass(newVersion, modifiedClass, lastestVersion);
 
-                            return true;
+                            result = true;
                         }
                     }
 
@@ -59,17 +61,17 @@ namespace XTRMTestProject.Version_Control
                     {
                         CreateNewClassToVersionControl(classWithAttr);
 
-                        return true;
+                        result = true;
                     }
                 }
 
                 catch
                 {
-                    return false;
+                    result = false;
                 }
             }
 
-            return false;
+            return result;
         }
 
         // Finde all classes with attribute type of attrType
