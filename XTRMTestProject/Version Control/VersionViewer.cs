@@ -53,8 +53,8 @@ namespace XTRMTestProject.Version_Control
             }
         }
 
-        // Change to private (public in tests only)
-        private  List<string> GetDifferenceBetweenTwoLists(List<string> newVersion, List<string> oldVersion)
+        // TODO: reorganize method to more correct working (look at diff algorythms)
+        public  List<string> GetDifferenceBetweenTwoLists(List<string> newVersion, List<string> oldVersion)
         {
             List<string> result = new List<string>();
 

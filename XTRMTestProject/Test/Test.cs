@@ -23,9 +23,9 @@ namespace XTRMTestProject.Test
             List<string> New = new List<string>() { "1", "2", "3", "4", "5", "6" };
 
             // To test this change method GetDifferenceBetweenTwoLists to public and uncomment next 2 code lines
-            //var result = vv.GetDifferenceBetweenTwoLists(New, Old);
+            var result = vv.GetDifferenceBetweenTwoLists(New, Old);
 
-            //Assert.AreEqual(result, new List<String>() {"1", "2", "-8", "3", "+4", "+5", "6", "-7"});
+            Assert.AreEqual(result, new List<String>() { "1", "2", "-8", "3", "+4", "+5", "6", "-7" });
         }
     }
 }
