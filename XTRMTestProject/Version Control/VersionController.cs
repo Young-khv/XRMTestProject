@@ -53,6 +53,8 @@ namespace XTRMTestProject.Version_Control
                         {
                             AddVersionToClass(newVersion, modifiedClass, lastestVersion);
 
+                            db.SaveChanges();
+
                             result = true;
                         }
                     }
@@ -60,6 +62,8 @@ namespace XTRMTestProject.Version_Control
                     else
                     {
                         CreateNewClassToVersionControl(classWithAttr);
+
+                        db.SaveChanges();
 
                         result = true;
                     }
@@ -107,13 +111,14 @@ namespace XTRMTestProject.Version_Control
             return methodList;
         }
 
-        // Getting class lastest version info
+        // Getting class lastest version info ----- REFACTOR
         private Model.Version GetLastestVersionByType(Type type)
         {
             var attribute = type.GetCustomAttributes(attributeType, false).First() as VersionControlAttribute;
 
-            Model.Version resultVersion = ConfigStartupVersionState(attribute);
-           
+            Model.Version resultVersion = new Model.Version();
+
+            ConfigStartupVersionState(attribute, resultVersion);
 
             var methodsOfClass = FindMethodsWithAttribute(type);
 
@@ -123,7 +128,7 @@ namespace XTRMTestProject.Version_Control
 
                 if (attribute.commitDateTime > resultVersion.date)
                 {
-                    resultVersion = ConfigStartupVersionState(attribute);
+                   ConfigStartupVersionState(attribute, resultVersion);
                 }
             }
 
@@ -138,7 +143,7 @@ namespace XTRMTestProject.Version_Control
             newClass.name = type.Name;
 
             db.ControlledClasses.Add(newClass);
-            db.SaveChanges();
+            //db.SaveChanges();
 
             var version = GetLastestVersionByType(type);
 
@@ -180,7 +185,7 @@ namespace XTRMTestProject.Version_Control
             version.previousVersion = previousVersion;
 
             db.Versions.Add(version);
-            db.SaveChanges();
+            //db.SaveChanges();
         }
 
         // Getting user by name or create and return if does not exist
@@ -194,7 +199,7 @@ namespace XTRMTestProject.Version_Control
                 user.login = userName;
 
                 db.Users.Add(user);
-                db.SaveChanges();
+                //db.SaveChanges();
             }
 
             else
@@ -206,17 +211,15 @@ namespace XTRMTestProject.Version_Control
         }
 
         // Configuring startup state of new version and return it
-        private Model.Version ConfigStartupVersionState(VersionControlAttribute attribute)
+        private void ConfigStartupVersionState(VersionControlAttribute attribute, Model.Version version)
         {
-            Model.Version resultVersion = new Model.Version()
-            {
-                date = attribute.commitDateTime,
-                comment = attribute.comment,
-                realCLassFileName = attribute.csFileRealName,
-                user = GetUserByNameString(attribute.userLogin)
-            };
+            version.date = attribute.commitDateTime;
 
-            return resultVersion;
+            version.comment = attribute.comment;
+
+            version.realCLassFileName = attribute.csFileRealName;
+
+            version.user = GetUserByNameString(attribute.userLogin);
         }
     }
 }
