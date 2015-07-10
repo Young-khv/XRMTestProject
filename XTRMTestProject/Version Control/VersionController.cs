@@ -53,8 +53,6 @@ namespace XTRMTestProject.Version_Control
                         {
                             AddVersionToClass(newVersion, modifiedClass, lastestVersion);
 
-                            db.SaveChanges();
-
                             result = true;
                         }
                     }
@@ -62,11 +60,11 @@ namespace XTRMTestProject.Version_Control
                     else
                     {
                         CreateNewClassToVersionControl(classWithAttr);
-
-                        db.SaveChanges();
-
+                       
                         result = true;
                     }
+
+                    db.SaveChanges();
                 }
 
                 catch
