@@ -64,9 +64,18 @@ namespace XTRMTestProject.Version_Control
                         result = true;
                     }
 
-                    db.SaveChanges();
+                   // db.SaveChanges();
                 }
 
+                catch
+                {
+                    result = false;
+                }
+
+                try
+                {
+                    db.SaveChanges();
+                }
                 catch
                 {
                     result = false;
@@ -109,7 +118,7 @@ namespace XTRMTestProject.Version_Control
             return methodList;
         }
 
-        // Getting class lastest version info ----- REFACTOR
+        // Getting class lastest version info
         private Model.Version GetLastestVersionByType(Type type)
         {
             var attribute = type.GetCustomAttributes(attributeType, false).First() as VersionControlAttribute;
@@ -141,7 +150,6 @@ namespace XTRMTestProject.Version_Control
             newClass.name = type.Name;
 
             db.ControlledClasses.Add(newClass);
-            //db.SaveChanges();
 
             var version = GetLastestVersionByType(type);
 
@@ -183,7 +191,6 @@ namespace XTRMTestProject.Version_Control
             version.previousVersion = previousVersion;
 
             db.Versions.Add(version);
-            //db.SaveChanges();
         }
 
         // Getting user by name or create and return if does not exist
@@ -197,7 +204,7 @@ namespace XTRMTestProject.Version_Control
                 user.login = userName;
 
                 db.Users.Add(user);
-                //db.SaveChanges();
+                db.SaveChanges();
             }
 
             else
