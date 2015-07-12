@@ -129,6 +129,11 @@ namespace XTRMTestProject.Version_Control
 
             var methodsOfClass = FindMethodsWithAttribute(type);
 
+            var aaa = methodsOfClass.Select(a => a.GetCustomAttributes(attributeType, false).First() as VersionControlAttribute)
+                          .Where(a => a.commitDateTime > resultVersion.date)
+                          .OrderByDescending(a=>a.commitDateTime)
+                          .First();
+
             foreach (var method in methodsOfClass)
             {
                 attribute = method.GetCustomAttributes(attributeType, false).First() as VersionControlAttribute;
@@ -187,7 +192,9 @@ namespace XTRMTestProject.Version_Control
         private void AddVersionToClass(Model.Version version, ControlledClass controlledClass, Model.Version previousVersion)
         {
             version.controlledClass = controlledClass;
+
             version.classBody = GetClassBody(version.realCLassFileName);
+
             version.previousVersion = previousVersion;
 
             db.Versions.Add(version);
