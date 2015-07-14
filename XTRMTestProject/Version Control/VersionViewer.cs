@@ -48,55 +48,67 @@ namespace XTRMTestProject.Version_Control
             }
             else
             {
+                List<string> result = new List<string>();
+
                 var oldVersionCode = version.previousVersion.classBody.Split(new string[] { "[~]" }, StringSplitOptions.None).ToList();
-                return GetDifferenceBetweenTwoLists(newVersionCode,oldVersionCode);
+
+                var LCSMatrix = GetLongestCommonSubsequenceMatrix(oldVersionCode, newVersionCode);
+
+                GetDiff(LCSMatrix,result,oldVersionCode,newVersionCode, oldVersionCode.Count, newVersionCode.Count);
+
+                return result;
             }
         }
 
-        // TODO: reorganize method to more correct working (look at diff algorythms)
-        public  List<string> GetDifferenceBetweenTwoLists(List<string> newVersion, List<string> oldVersion)
+        private static void GetDiff(int[,] lcsMatrix, List<string> result, List<string> s1, List<string> s2, int i, int j)
         {
-            List<string> result = new List<string>();
-
-            var deletedItems = oldVersion.Except(newVersion).ToList();
-
-            var addedItems = newVersion.Except(oldVersion).ToList();
-
-            // Use j - index to work with old list, i - index - with new list
-            int i = 0;
-            int j = 0;
-            for (int step = 0; step < oldVersion.Count + deletedItems.Count + addedItems.Count ; step++)
+            if (i > 0 && j > 0 && s1[i - 1] == s2[j - 1])
             {
-                if (i < newVersion.Count && j < oldVersion.Count && newVersion[i] == oldVersion[j])
+                GetDiff(lcsMatrix, result, s1, s2, i - 1, j - 1);
+                result.Add("  " + s1[i - 1]);
+            }
+            else
+            {
+                if (j > 0 && (i == 0 || lcsMatrix[i, j - 1] >= lcsMatrix[i - 1, j]))
                 {
-                    result.Add(newVersion[i]);
-                    if (i < newVersion.Count){i++;}
-                    if (j < oldVersion.Count){j++;}
+                    GetDiff(lcsMatrix, result, s1, s2, i, j - 1);
+                    result.Add("+ " + s2[j - 1]);
                 }
-
-                else
+                else if (i > 0 && (j == 0 || lcsMatrix[i, j - 1] < lcsMatrix[i - 1, j]))
                 {
-                    if (j < oldVersion.Count)
-                    {
-                        if (deletedItems.FindIndex(f => f == oldVersion[j]) >= 0)
-                        {
-                            result.Add(string.Format("-{0}", oldVersion[j]));
-                           j++;
-                        }
-                    }
+                    GetDiff(lcsMatrix, result, s1, s2, i - 1, j);
+                    result.Add("- " + s1[i - 1]);
+                }
+            }
+        }
 
-                    if (i < newVersion.Count)
-                    {
-                        if (addedItems.FindIndex(f => f == newVersion[i]) >= 0)
-                        {
-                            result.Add(string.Format("+{0}", newVersion[i]));
-                            i++;
-                        }
-                    }
+        private static int[,] GetLongestCommonSubsequenceMatrix(List<string> s1, List<string> s2)
+        {
+            int[,] lcsMatrix = new int[s1.Count + 1, s2.Count + 1];
+
+            for (int i = 0; i < lcsMatrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < lcsMatrix.GetLength(1); j++)
+                {
+                    lcsMatrix[i, j] = 0;
                 }
             }
 
-            return result;
+            for (int i = 1; i < lcsMatrix.GetLength(0); i++)
+            {
+                for (int j = 1; j < lcsMatrix.GetLength(1); j++)
+                {
+                    if (s1[i - 1] == s2[j - 1])
+                        lcsMatrix[i, j] = lcsMatrix[i - 1, j - 1] + 1;
+                    else
+                        lcsMatrix[i, j] = Math.Max(lcsMatrix[i - 1, j], lcsMatrix[i, j - 1]);
+                }
+            }
+
+            return lcsMatrix;
         }
+
+
+        
     }
 }
