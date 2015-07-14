@@ -107,8 +107,5 @@ namespace XTRMTestProject.Version_Control
 
             return lcsMatrix;
         }
-
-
-        
     }
 }

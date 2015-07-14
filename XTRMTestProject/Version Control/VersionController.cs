@@ -128,12 +128,7 @@ namespace XTRMTestProject.Version_Control
             ConfigStartupVersionState(attribute, resultVersion);
 
             var methodsOfClass = FindMethodsWithAttribute(type);
-
-            var aaa = methodsOfClass.Select(a => a.GetCustomAttributes(attributeType, false).First() as VersionControlAttribute)
-                          .Where(a => a.commitDateTime > resultVersion.date)
-                          .OrderByDescending(a=>a.commitDateTime)
-                          .First();
-
+           
             foreach (var method in methodsOfClass)
             {
                 attribute = method.GetCustomAttributes(attributeType, false).First() as VersionControlAttribute;
